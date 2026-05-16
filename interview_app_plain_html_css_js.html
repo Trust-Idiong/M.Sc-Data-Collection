@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Computer Science Curriculum Interview App</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f8;
+      color: #172033;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #111827;
+      color: #ffffff;
+      padding: 24px 16px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    header p {
+      margin: 8px 0 0;
+      color: #d1d5db;
+    }
+
+    .container {
+      width: min(1100px, 94%);
+      margin: 24px auto 50px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .tab-button,
+    button,
+    .file-label {
+      border: none;
+      border-radius: 10px;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .tab-button {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .tab-button.active {
+      background: #111827;
+      color: #ffffff;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #d9dee7;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 24px rgba(17, 24, 39, 0.06);
+    }
+
+    .card h2,
+    .card h3 {
+      margin-top: 0;
+    }
+
+    .notice {
+      background: #eef6ff;
+      border-left: 5px solid #2563eb;
+      padding: 14px;
+      border-radius: 10px;
+      margin-top: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    textarea {
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 15px;
+      background: #ffffff;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .question-domain {
+      display: inline-block;
+      background: #e5e7eb;
+      color: #374151;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .question-text {
+      font-size: 18px;
+      font-weight: 800;
+      margin: 0 0 12px;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+      align-items: center;
+    }
+
+    .primary {
+      background: #111827;
+      color: #ffffff;
+    }
+
+    .secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .danger {
+      background: #dc2626;
+      color: #ffffff;
+    }
+
+    .success {
+      background: #047857;
+      color: #ffffff;
+    }
+
+    .warning-text {
+      color: #b91c1c;
+      font-weight: 700;
+    }
+
+    .success-text {
+      color: #047857;
+      font-weight: 700;
+    }
+
+    .small {
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 12px;
+    }
+
+    .progress-wrapper {
+      background: #e5e7eb;
+      border-radius: 999px;
+      height: 12px;
+      overflow: hidden;
+      margin: 8px 0 4px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: #111827;
+      transition: width 0.25s ease;
+    }
+
+    .file-label {
+      display: inline-block;
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    th,
+    td {
+      border: 1px solid #e5e7eb;
+      padding: 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fafc;
+    }
+
+    .submission-card {
+      border: 1px solid #d9dee7;
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 14px;
+      background: #ffffff;
+    }
+
+    .pill {
+      display: inline-block;
+      background: #ecfdf5;
+      color: #047857;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    @media (max-width: 760px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      header h1 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Appendix C: Computer Science Curriculum Interview App</h1>
+    <p>Semi-Structured Interview Guide for Colleges of Education in Akwa Ibom State</p>
+  </header>
+
+  <main class="container">
+    <div class="tabs">
+      <button class="tab-button active" id="respondentTab" onclick="showTab('respondent')">Respondent Form</button>
+      <button class="tab-button" id="researcherTab" onclick="showTab('researcher')">Researcher Dashboard</button>
+    </div>
+
+    <section id="respondentSection">
+      <div class="card">
+        <h2>Purpose of the Guide</h2>
+        <p>
+          This interview guide is designed to obtain detailed information from Computer Science lecturers on the implementation of the Computer Science curriculum in Colleges of Education in Akwa Ibom State. It focuses on curriculum coverage, resource adequacy, practical teaching, assessment practices, implementation challenges, and student outcomes.
+        </p>
+        <div class="notice">
+          <strong>Introductory Statement:</strong> Thank you for agreeing to participate in this study. There are no right or wrong answers. I am interested in your honest views and experiences. With your permission, this interview will be recorded for transcription and analysis, and all information provided will be treated confidentially.
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Progress</h2>
+        <div class="progress-wrapper">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <p class="small" id="progressText">0 of 8 interview questions answered.</p>
+      </div>
+
+      <div class="card">
+        <h2>Section A: Background Information</h2>
+        <div class="grid">
+          <div>
+            <label for="institution">Institution</label>
+            <input id="institution" type="text" placeholder="Enter institution name" oninput="saveDraft()" />
+          </div>
+          <div>
+            <label for="qualification">Highest academic qualification</label>
+            <input id="qualification" type="text" placeholder="Enter qualification" oninput="saveDraft()" />
+          </div>
+          <div>
+            <label for="yearsHigherEducation">Number of years teaching in higher education</label>
+            <input id="yearsHigherEducation" type="text" placeholder="Enter number of years" oninput="saveDraft()" />
+          </div>
+          <div>
+            <label for="yearsComputerScience">Number of years teaching Computer Science-related courses</label>
+            <input id="yearsComputerScience" type="text" placeholder="Enter number of years" oninput="saveDraft()" />
+          </div>
+        </div>
+      </div>
+
+      <div id="questionsContainer"></div>
+
+      <div class="card">
+        <h2>Upload Snapshot of Students' Result Sheet</h2>
+        <p class="small">
+          Upload a photo, screenshot, scanned image, or PDF of the students' result sheet. You may cover names or personal identifiers if they are not needed for the study.
+        </p>
+        <label class="file-label" for="resultSheet">Choose result sheet file</label>
+        <input id="resultSheet" type="file" accept="image/*,application/pdf" capture="environment" onchange="handleResultSheet(event)" />
+        <p id="resultSheetName" class="small">No file selected.</p>
+      </div>
+
+      <div class="card">
+        <label>
+          <input id="consent" type="checkbox" onchange="saveDraft()" />
+          I confirm that I have agreed to participate in this interview and understand that my responses will be used for research purposes and treated confidentially.
+        </label>
+
+        <p id="formMessage"></p>
+
+        <div class="button-row">
+          <button class="primary" onclick="submitInterview()">Submit and Download My Response File</button>
+          <button class="secondary" onclick="clearDraft()">Clear Form</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="researcherSection" class="hidden">
+      <div id="pinBox" class="card">
+        <h2>Researcher Access</h2>
+        <p class="small">Enter the researcher PIN. The default PIN is <strong>2026</strong>. Change it in the JavaScript before real use.</p>
+        <input type="password" id="researcherPin" placeholder="Enter PIN" />
+        <div class="button-row">
+          <button class="primary" onclick="unlockDashboard()">Unlock Dashboard</button>
+        </div>
+        <p id="pinMessage" class="warning-text"></p>
+      </div>
+
+      <div id="dashboard" class="hidden">
+        <div class="card">
+          <h2>Researcher Dashboard</h2>
+          <p>
+            This plain HTML version does not need React. It works offline in a browser. For remote respondents, ask them to submit and send you the downloaded JSON file by email, WhatsApp, Google Drive, or any channel you prefer. Then import the files here and download all answers together.
+          </p>
+          <p><span class="pill" id="submissionCount">0 submissions loaded</span></p>
+
+          <div class="button-row">
+            <label class="file-label" for="importFiles">Import respondent JSON files</label>
+            <input id="importFiles" type="file" accept="application/json" multiple onchange="importSubmissions(event)" />
+            <button class="primary" onclick="downloadAllJson()">Download All Answers as JSON</button>
+            <button class="secondary" onclick="downloadCsvSummary()">Download Summary as CSV</button>
+            <button class="danger" onclick="clearAllSubmissions()">Clear Dashboard</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Loaded Submissions</h2>
+          <div id="submissionsContainer"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const RESEARCHER_PIN = "2026";
+    const STORAGE_KEY = "cs_curriculum_interview_submissions_plain_html";
+    const DRAFT_KEY = "cs_curriculum_interview_draft_plain_html";
+
+    const questions = [
+      {
+        id: "context_1",
+        domain: "CONTEXT",
+        text: "How would you describe the teaching and learning environment for Computer Science at this college?"
+      },
+      {
+        id: "context_2",
+        domain: "CONTEXT",
+        text: "What institutional, policy-related, or local factors affect the implementation of the Computer Science curriculum?"
+      },
+      {
+        id: "input_1",
+        domain: "INPUT",
+        text: "How adequate are the facilities, computers, internet access, power supply, software, and instructional materials for teaching Computer Science?"
+      },
+      {
+        id: "input_2",
+        domain: "INPUT",
+        text: "How has your training and experience prepared you for practical and technology-supported teaching?"
+      },
+      {
+        id: "process_1",
+        domain: "PROCESS",
+        text: "How do you usually teach Computer Science, including theory, demonstrations, and practical activities?"
+      },
+      {
+        id: "process_2",
+        domain: "PROCESS",
+        text: "To what extent are you able to cover the expected curriculum content and practical components?"
+      },
+      {
+        id: "product_1",
+        domain: "PRODUCT",
+        text: "How do you assess students’ theoretical knowledge and practical competence?"
+      },
+      {
+        id: "product_2",
+        domain: "PRODUCT",
+        text: "What do students’ final results and practical performance suggest about the outcomes of the implemented curriculum?"
+      }
+    ];
+
+    let currentRecorder = null;
+    let currentRecordingQuestionId = null;
+    let currentAudioChunks = [];
+    let currentStream = null;
+    let recordingStartTime = null;
+    let timerInterval = null;
+    let resultSheetData = null;
+    let submissions = loadSubmissions();
+
+    const responses = {};
+    questions.forEach(q => {
+      responses[q.id] = {
+        audio: null,
+        note: ""
+      };
+    });
+
+    function showTab(tab) {
+      document.getElementById("respondentSection").classList.toggle("hidden", tab !== "respondent");
+      document.getElementById("researcherSection").classList.toggle("hidden", tab !== "researcher");
+      document.getElementById("respondentTab").classList.toggle("active", tab === "respondent");
+      document.getElementById("researcherTab").classList.toggle("active", tab === "researcher");
+      if (tab === "researcher") {
+        renderSubmissions();
+      }
+    }
+
+    function renderQuestions() {
+      const container = document.getElementById("questionsContainer");
+      container.innerHTML = "";
+
+      questions.forEach((question, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.id = question.id;
+        card.innerHTML = `
+          <span class="question-domain">${question.domain}</span>
+          <p class="question-text">${index + 1}. ${question.text}</p>
+          <div class="button-row">
+            <button class="primary" id="record_${question.id}" onclick="startRecording('${question.id}')">Record Response</button>
+            <button class="danger hidden" id="stop_${question.id}" onclick="stopRecording()">Stop Recording <span id="timer_${question.id}">0:00</span></button>
+            <button class="secondary" onclick="removeRecording('${question.id}')">Remove Recording</button>
+          </div>
+          <audio id="audio_${question.id}" controls class="hidden"></audio>
+          <p class="small" id="status_${question.id}">No recording yet.</p>
+          <label for="note_${question.id}">Optional short note or key points</label>
+          <textarea id="note_${question.id}" placeholder="Optional: type a short note here" oninput="saveNote('${question.id}')"></textarea>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    async function startRecording(questionId) {
+      const message = document.getElementById("formMessage");
+      message.textContent = "";
+      message.className = "";
+
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.MediaRecorder) {
+        message.textContent = "Your browser does not support audio recording. Please use Chrome, Edge, or Firefox.";
+        message.className = "warning-text";
+        return;
+      }
+
+      if (currentRecorder) {
+        message.textContent = "Please stop the current recording before starting another one.";
+        message.className = "warning-text";
+        return;
+      }
+
+      try {
+        currentStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        currentAudioChunks = [];
+        currentRecordingQuestionId = questionId;
+        currentRecorder = new MediaRecorder(currentStream);
+
+        currentRecorder.ondataavailable = function(event) {
+          if (event.data.size > 0) {
+            currentAudioChunks.push(event.data);
+          }
+        };
+
+        currentRecorder.onstop = async function() {
+          const audioBlob = new Blob(currentAudioChunks, { type: "audio/webm" });
+          const audioDataUrl = await blobToDataUrl(audioBlob);
+          const durationSeconds = Math.round((Date.now() - recordingStartTime) / 1000);
+
+          responses[currentRecordingQuestionId].audio = {
+            dataUrl: audioDataUrl,
+            mimeType: audioBlob.type,
+            sizeBytes: audioBlob.size,
+            durationSeconds: durationSeconds,
+            recordedAt: new Date().toISOString(),
+            fileName: currentRecordingQuestionId + "_response.webm"
+          };
+
+          const audioElement = document.getElementById("audio_" + currentRecordingQuestionId);
+          audioElement.src = audioDataUrl;
+          audioElement.classList.remove("hidden");
+
+          document.getElementById("status_" + currentRecordingQuestionId).textContent = "Recording saved.";
+          document.getElementById("record_" + currentRecordingQuestionId).classList.remove("hidden");
+          document.getElementById("stop_" + currentRecordingQuestionId).classList.add("hidden");
+
+          stopTimer();
+          stopStream();
+          currentRecorder = null;
+          currentRecordingQuestionId = null;
+          currentAudioChunks = [];
+          saveDraft();
+          updateProgress();
+        };
+
+        currentRecorder.start();
+        recordingStartTime = Date.now();
+        document.getElementById("record_" + questionId).classList.add("hidden");
+        document.getElementById("stop_" + questionId).classList.remove("hidden");
+        document.getElementById("status_" + questionId).textContent = "Recording in progress...";
+        startTimer(questionId);
+      } catch (error) {
+        message.textContent = "Microphone permission was not granted, or the microphone is unavailable.";
+        message.className = "warning-text";
+      }
+    }
+
+    function stopRecording() {
+      if (currentRecorder && currentRecorder.state === "recording") {
+        currentRecorder.stop();
+      }
+    }
+
+    function removeRecording(questionId) {
+      responses[questionId].audio = null;
+      const audioElement = document.getElementById("audio_" + questionId);
+      audioElement.src = "";
+      audioElement.classList.add("hidden");
+      document.getElementById("status_" + questionId).textContent = "No recording yet.";
+      saveDraft();
+      updateProgress();
+    }
+
+    function startTimer(questionId) {
+      stopTimer();
+      timerInterval = setInterval(function() {
+        const secondsElapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+        const minutes = Math.floor(secondsElapsed / 60);
+        const seconds = String(secondsElapsed % 60).padStart(2, "0");
+        document.getElementById("timer_" + questionId).textContent = minutes + ":" + seconds;
+      }, 500);
+    }
+
+    function stopTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+    }
+
+    function stopStream() {
+      if (currentStream) {
+        currentStream.getTracks().forEach(track => track.stop());
+        currentStream = null;
+      }
+    }
+
+    function saveNote(questionId) {
+      responses[questionId].note = document.getElementById("note_" + questionId).value;
+      saveDraft();
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const answered = questions.filter(q => {
+        const r = responses[q.id];
+        return r.audio || (r.note && r.note.trim().length > 0);
+      }).length;
+
+      const percent = Math.round((answered / questions.length) * 100);
+      document.getElementById("progressBar").style.width = percent + "%";
+      document.getElementById("progressText").textContent = answered + " of " + questions.length + " interview questions answered.";
+    }
+
+    async function handleResultSheet(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const dataUrl = await fileToDataUrl(file);
+      resultSheetData = {
+        name: file.name,
+        type: file.type,
+        sizeBytes: file.size,
+        uploadedAt: new Date().toISOString(),
+        dataUrl: dataUrl
+      };
+
+      document.getElementById("resultSheetName").textContent = "Selected file: " + file.name;
+      saveDraft();
+    }
+
+    function getBackgroundInfo() {
+      return {
+        institution: document.getElementById("institution").value,
+        highestAcademicQualification: document.getElementById("qualification").value,
+        yearsTeachingHigherEducation: document.getElementById("yearsHigherEducation").value,
+        yearsTeachingComputerScienceCourses: document.getElementById("yearsComputerScience").value
+      };
+    }
+
+    function submitInterview() {
+      const message = document.getElementById("formMessage");
+      message.textContent = "";
+      message.className = "";
+
+      if (!document.getElementById("consent").checked) {
+        message.textContent = "Please confirm consent before submitting.";
+        message.className = "warning-text";
+        return;
+      }
+
+      const background = getBackgroundInfo();
+      if (!background.institution.trim()) {
+        message.textContent = "Please enter the institution name before submitting.";
+        message.className = "warning-text";
+        return;
+      }
+
+      const answered = questions.filter(q => {
+        const r = responses[q.id];
+        return r.audio || (r.note && r.note.trim().length > 0);
+      }).length;
+
+      if (answered === 0) {
+        message.textContent = "Please record or type at least one response before submitting.";
+        message.className = "warning-text";
+        return;
+      }
+
+      const submission = {
+        id: "SUB-" + Date.now(),
+        submittedAt: new Date().toISOString(),
+        title: "Semi-Structured Interview Guide on the Implementation of the Computer Science Curriculum in Colleges of Education in Akwa Ibom State",
+        background: background,
+        questions: questions,
+        responses: responses,
+        resultSheet: resultSheetData,
+        consentConfirmed: true
+      };
+
+      downloadJson(submission.id + "_interview_response.json", submission);
+
+      message.textContent = "Your response file has been downloaded. Please send the downloaded JSON file to the researcher.";
+      message.className = "success-text";
+
+      clearDraft(false);
+    }
+
+    function saveDraft() {
+      const draft = {
+        background: getBackgroundInfo(),
+        responses: responses,
+        resultSheet: resultSheetData,
+        consent: document.getElementById("consent").checked
+      };
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+    }
+
+    function loadDraft() {
+      const saved = localStorage.getItem(DRAFT_KEY);
+      if (!saved) return;
+
+      try {
+        const draft = JSON.parse(saved);
+        if (draft.background) {
+          document.getElementById("institution").value = draft.background.institution || "";
+          document.getElementById("qualification").value = draft.background.highestAcademicQualification || "";
+          document.getElementById("yearsHigherEducation").value = draft.background.yearsTeachingHigherEducation || "";
+          document.getElementById("yearsComputerScience").value = draft.background.yearsTeachingComputerScienceCourses || "";
+        }
+
+        if (draft.responses) {
+          questions.forEach(q => {
+            responses[q.id] = draft.responses[q.id] || { audio: null, note: "" };
+            document.getElementById("note_" + q.id).value = responses[q.id].note || "";
+            if (responses[q.id].audio && responses[q.id].audio.dataUrl) {
+              const audioElement = document.getElementById("audio_" + q.id);
+              audioElement.src = responses[q.id].audio.dataUrl;
+              audioElement.classList.remove("hidden");
+              document.getElementById("status_" + q.id).textContent = "Recording saved.";
+            }
+          });
+        }
+
+        resultSheetData = draft.resultSheet || null;
+        if (resultSheetData && resultSheetData.name) {
+          document.getElementById("resultSheetName").textContent = "Selected file: " + resultSheetData.name;
+        }
+
+        document.getElementById("consent").checked = !!draft.consent;
+        updateProgress();
+      } catch (error) {
+        console.log("Could not load draft", error);
+      }
+    }
+
+    function clearDraft(showMessage = true) {
+      localStorage.removeItem(DRAFT_KEY);
+
+      document.getElementById("institution").value = "";
+      document.getElementById("qualification").value = "";
+      document.getElementById("yearsHigherEducation").value = "";
+      document.getElementById("yearsComputerScience").value = "";
+      document.getElementById("consent").checked = false;
+      document.getElementById("resultSheet").value = "";
+      document.getElementById("resultSheetName").textContent = "No file selected.";
+
+      resultSheetData = null;
+
+      questions.forEach(q => {
+        responses[q.id] = { audio: null, note: "" };
+        document.getElementById("note_" + q.id).value = "";
+        document.getElementById("audio_" + q.id).src = "";
+        document.getElementById("audio_" + q.id).classList.add("hidden");
+        document.getElementById("status_" + q.id).textContent = "No recording yet.";
+      });
+
+      updateProgress();
+
+      if (showMessage) {
+        const message = document.getElementById("formMessage");
+        message.textContent = "Form cleared.";
+        message.className = "success-text";
+      }
+    }
+
+    function unlockDashboard() {
+      const pin = document.getElementById("researcherPin").value;
+      const pinMessage = document.getElementById("pinMessage");
+      if (pin === RESEARCHER_PIN) {
+        document.getElementById("pinBox").classList.add("hidden");
+        document.getElementById("dashboard").classList.remove("hidden");
+        renderSubmissions();
+      } else {
+        pinMessage.textContent = "Incorrect PIN.";
+      }
+    }
+
+    async function importSubmissions(event) {
+      const files = Array.from(event.target.files || []);
+      for (const file of files) {
+        try {
+          const text = await file.text();
+          const submission = JSON.parse(text);
+          if (submission.id && !submissions.some(s => s.id === submission.id)) {
+            submissions.unshift(submission);
+          }
+        } catch (error) {
+          alert("Could not import " + file.name + ". Please make sure it is a valid respondent JSON file.");
+        }
+      }
+      saveSubmissions();
+      renderSubmissions();
+      event.target.value = "";
+    }
+
+    function renderSubmissions() {
+      const count = document.getElementById("submissionCount");
+      if (count) {
+        count.textContent = submissions.length + " submission" + (submissions.length === 1 ? "" : "s") + " loaded";
+      }
+
+      const container = document.getElementById("submissionsContainer");
+      if (!container) return;
+
+      if (submissions.length === 0) {
+        container.innerHTML = "<p class='small'>No submissions loaded yet. Import respondent JSON files to begin.</p>";
+        return;
+      }
+
+      container.innerHTML = "";
+      submissions.forEach((submission, index) => {
+        const div = document.createElement("div");
+        div.className = "submission-card";
+
+        let responseHtml = "";
+        questions.forEach((q, qIndex) => {
+          const response = submission.responses && submission.responses[q.id] ? submission.responses[q.id] : null;
+          const audioHtml = response && response.audio && response.audio.dataUrl
+            ? `<audio controls src="${response.audio.dataUrl}"></audio>`
+            : `<p class="small">No audio recording for this question.</p>`;
+          const noteHtml = response && response.note
+            ? `<p><strong>Note:</strong> ${escapeHtml(response.note)}</p>`
+            : "";
+
+          responseHtml += `
+            <tr>
+              <td>${qIndex + 1}</td>
+              <td><strong>${q.domain}</strong><br>${escapeHtml(q.text)}</td>
+              <td>${audioHtml}${noteHtml}</td>
+            </tr>
+          `;
+        });
+
+        const resultSheetHtml = submission.resultSheet && submission.resultSheet.dataUrl
+          ? `<a class="file-label" href="${submission.resultSheet.dataUrl}" download="${submission.resultSheet.name || 'result_sheet'}">Download result sheet</a>`
+          : `<span class="small">No result sheet attached.</span>`;
+
+        div.innerHTML = `
+          <h3>${index + 1}. ${escapeHtml(submission.background?.institution || "Institution not provided")}</h3>
+          <p class="small">Submission ID: ${submission.id}</p>
+          <p class="small">Submitted at: ${submission.submittedAt ? new Date(submission.submittedAt).toLocaleString() : "Not provided"}</p>
+          <div class="grid">
+            <p><strong>Highest academic qualification:</strong><br>${escapeHtml(submission.background?.highestAcademicQualification || "")}</p>
+            <p><strong>Years teaching in higher education:</strong><br>${escapeHtml(submission.background?.yearsTeachingHigherEducation || "")}</p>
+            <p><strong>Years teaching Computer Science-related courses:</strong><br>${escapeHtml(submission.background?.yearsTeachingComputerScienceCourses || "")}</p>
+            <p><strong>Result sheet:</strong><br>${resultSheetHtml}</p>
+          </div>
+          <div class="button-row">
+            <button class="secondary" onclick="downloadSingleSubmission('${submission.id}')">Download This Submission</button>
+            <button class="danger" onclick="deleteSubmission('${submission.id}')">Delete</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>Question</th>
+                <th>Response</th>
+              </tr>
+            </thead>
+            <tbody>${responseHtml}</tbody>
+          </table>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function downloadSingleSubmission(id) {
+      const submission = submissions.find(s => s.id === id);
+      if (submission) {
+        downloadJson(submission.id + "_interview_response.json", submission);
+      }
+    }
+
+    function deleteSubmission(id) {
+      submissions = submissions.filter(s => s.id !== id);
+      saveSubmissions();
+      renderSubmissions();
+    }
+
+    function clearAllSubmissions() {
+      if (!confirm("Are you sure you want to clear all loaded submissions from this browser?")) return;
+      submissions = [];
+      saveSubmissions();
+      renderSubmissions();
+    }
+
+    function downloadAllJson() {
+      downloadJson("all_interview_submissions.json", submissions);
+    }
+
+    function downloadCsvSummary() {
+      const headers = [
+        "Submission ID",
+        "Submitted At",
+        "Institution",
+        "Highest Academic Qualification",
+        "Years Teaching in Higher Education",
+        "Years Teaching Computer Science-related Courses",
+        ...questions.map(q => q.domain + ": " + q.text),
+        "Result Sheet File"
+      ];
+
+      const rows = submissions.map(submission => {
+        const row = [
+          submission.id || "",
+          submission.submittedAt || "",
+          submission.background?.institution || "",
+          submission.background?.highestAcademicQualification || "",
+          submission.background?.yearsTeachingHigherEducation || "",
+          submission.background?.yearsTeachingComputerScienceCourses || ""
+        ];
+
+        questions.forEach(q => {
+          const response = submission.responses && submission.responses[q.id] ? submission.responses[q.id] : null;
+          let value = "";
+          if (response && response.note) value += response.note;
+          if (response && response.audio) value += value ? " | Audio available in JSON" : "Audio available in JSON";
+          row.push(value);
+        });
+
+        row.push(submission.resultSheet?.name || "");
+        return row;
+      });
+
+      const csv = [headers, ...rows]
+        .map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(","))
+        .join("\n");
+
+      downloadFile("interview_summary.csv", csv, "text/csv;charset=utf-8");
+    }
+
+    function loadSubmissions() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function saveSubmissions() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(submissions));
+    }
+
+    function blobToDataUrl(blob) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    }
+
+    function fileToDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function downloadJson(filename, data) {
+      downloadFile(filename, JSON.stringify(data, null, 2), "application/json");
+    }
+
+    function downloadFile(filename, content, mimeType) {
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    renderQuestions();
+    loadDraft();
+    updateProgress();
+  </script>
+</body>
+</html>
