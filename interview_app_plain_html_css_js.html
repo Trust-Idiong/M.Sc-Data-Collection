@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwQ130tjxPusGhuri3yLCjPLaxwVumKWttBr2Gnw3TKPa_6D2Q7YMFxxEcDK0MkQJ9-/exec";
   <title>Computer Science Curriculum Interview App</title>
   <style>
     * {
@@ -630,54 +631,75 @@
       };
     }
 
-    function submitInterview() {
-      const message = document.getElementById("formMessage");
-      message.textContent = "";
-      message.className = "";
+async function submitInterview() {
+  const message = document.getElementById("formMessage");
+  message.textContent = "";
+  message.className = "";
 
-      if (!document.getElementById("consent").checked) {
-        message.textContent = "Please confirm consent before submitting.";
-        message.className = "warning-text";
-        return;
-      }
+  if (!document.getElementById("consent").checked) {
+    message.textContent = "Please confirm consent before submitting.";
+    message.className = "warning-text";
+    return;
+  }
 
-      const background = getBackgroundInfo();
-      if (!background.institution.trim()) {
-        message.textContent = "Please enter the institution name before submitting.";
-        message.className = "warning-text";
-        return;
-      }
+  const background = getBackgroundInfo();
 
-      const answered = questions.filter(q => {
-        const r = responses[q.id];
-        return r.audio || (r.note && r.note.trim().length > 0);
-      }).length;
+  if (!background.institution.trim()) {
+    message.textContent = "Please enter the institution name before submitting.";
+    message.className = "warning-text";
+    return;
+  }
 
-      if (answered === 0) {
-        message.textContent = "Please record or type at least one response before submitting.";
-        message.className = "warning-text";
-        return;
-      }
+  const answered = questions.filter(q => {
+    const r = responses[q.id];
+    return r.audio || (r.note && r.note.trim().length > 0);
+  }).length;
 
-      const submission = {
-        id: "SUB-" + Date.now(),
-        submittedAt: new Date().toISOString(),
-        title: "Semi-Structured Interview Guide on the Implementation of the Computer Science Curriculum in Colleges of Education in Akwa Ibom State",
-        background: background,
-        questions: questions,
-        responses: responses,
-        resultSheet: resultSheetData,
-        consentConfirmed: true
-      };
+  if (answered === 0) {
+    message.textContent = "Please record or type at least one response before submitting.";
+    message.className = "warning-text";
+    return;
+  }
 
-      downloadJson(submission.id + "_interview_response.json", submission);
+  const submission = {
+    id: "SUB-" + Date.now(),
+    submittedAt: new Date().toISOString(),
+    title: "Semi-Structured Interview Guide on the Implementation of the Computer Science Curriculum in Colleges of Education in Akwa Ibom State",
+    background: background,
+    questions: questions,
+    responses: responses,
+    resultSheet: resultSheetData,
+    consentConfirmed: true
+  };
 
-      message.textContent = "Your response file has been downloaded. Please send the downloaded JSON file to the researcher.";
-      message.className = "success-text";
+  try {
+    message.textContent = "Submitting response. Please wait...";
+    message.className = "";
 
-      clearDraft(false);
-    }
+    await fetch(GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(submission)
+    });
 
+    // Keep a local backup for safety
+    downloadJson(submission.id + "_interview_response_backup.json", submission);
+
+    message.textContent = "Submission sent. A backup copy has also been downloaded to this device.";
+    message.className = "success-text";
+
+    clearDraft(false);
+
+  } catch (error) {
+    message.textContent = "Submission failed. A backup copy will be downloaded. Please send it to the researcher manually.";
+    message.className = "warning-text";
+
+    downloadJson(submission.id + "_interview_response_backup.json", submission);
+  }
+}
     function saveDraft() {
       const draft = {
         background: getBackgroundInfo(),
